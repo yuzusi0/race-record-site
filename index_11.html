@@ -1,0 +1,445 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>OCR結果集計とレース表</title>
+    <style>
+        table {
+            border-collapse: collapse;
+            width: 60%;
+            margin: 20px auto;
+            table-layout: fixed;
+        }
+        th, td {
+            border: 1px solid black;
+            padding: 4px;
+            font-size: 12px;
+            text-align: center;
+        }
+        th {
+            background-color: #f2f2f2;
+        }
+        button {
+            margin: 0 2px;
+            padding: 2px 5px;
+            font-size: 12px;
+        }
+        td:nth-child(1) { width: 10%; }
+        td:nth-child(2) { width: 30%; }
+        td:nth-child(3) { width: 10%; }
+        td:nth-child(4) { width: 10%; }
+        td:nth-child(5) { width: 20%; }
+    </style>
+</head>
+<body>
+
+    <h1>12レースの記録表</h1>
+    <table id="race-table">
+        <thead>
+            <tr>
+                <th>レース番号</th>
+                <th>コース名</th>
+                <th>順位</th>
+                <th>得点</th>
+                <th>前張り/打開</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>1</td>
+                <td><input type="text" list="course-list" oninput="filterCourses(this)" /></td>
+                <td contenteditable="true" oninput="updateScore(this)"></td>
+                <td></td>
+                <td>
+                    <button onclick="selectStrategy(this, 'Frontrun')">前張り</button>
+                    <button onclick="selectStrategy(this, 'Bagging')">打開</button>
+                </td>
+            </tr>
+            <tr>
+                <td>2</td>
+                <td><input type="text" list="course-list" oninput="filterCourses(this)" /></td>
+                <td contenteditable="true" oninput="updateScore(this)"></td>
+                <td></td>
+                <td>
+                    <button onclick="selectStrategy(this, 'Frontrun')">前張り</button>
+                    <button onclick="selectStrategy(this, 'Bagging')">打開</button>
+                </td>
+            </tr>
+            <tr>
+                <td>3</td>
+                <td><input type="text" list="course-list" oninput="filterCourses(this)" /></td>
+                <td contenteditable="true" oninput="updateScore(this)"></td>
+                <td></td>
+                <td>
+                    <button onclick="selectStrategy(this, 'Frontrun')">前張り</button>
+                    <button onclick="selectStrategy(this, 'Bagging')">打開</button>
+                </td>
+            </tr>
+            <tr>
+                <td>4</td>
+                <td><input type="text" list="course-list" oninput="filterCourses(this)" /></td>
+                <td contenteditable="true" oninput="updateScore(this)"></td>
+                <td></td>
+                <td>
+                    <button onclick="selectStrategy(this, 'Frontrun')">前張り</button>
+                    <button onclick="selectStrategy(this, 'Bagging')">打開</button>
+                </td>
+            </tr>
+            <tr>
+                <td>5</td>
+                <td><input type="text" list="course-list" oninput="filterCourses(this)" /></td>
+                <td contenteditable="true" oninput="updateScore(this)"></td>
+                <td></td>
+                <td>
+                    <button onclick="selectStrategy(this, 'Frontrun')">前張り</button>
+                    <button onclick="selectStrategy(this, 'Bagging')">打開</button>
+                </td>
+            </tr>
+            <tr>
+                <td>6</td>
+                <td><input type="text" list="course-list" oninput="filterCourses(this)" /></td>
+                <td contenteditable="true" oninput="updateScore(this)"></td>
+                <td></td>
+                <td>
+                    <button onclick="selectStrategy(this, 'Frontrun')">前張り</button>
+                    <button onclick="selectStrategy(this, 'Bagging')">打開</button>
+                </td>
+            </tr>
+            <tr>
+                <td>7</td>
+                <td><input type="text" list="course-list" oninput="filterCourses(this)" /></td>
+                <td contenteditable="true" oninput="updateScore(this)"></td>
+                <td></td>
+                <td>
+                    <button onclick="selectStrategy(this, 'Frontrun')">前張り</button>
+                    <button onclick="selectStrategy(this, 'Bagging')">打開</button>
+                </td>
+            </tr>
+            <tr>
+                <td>8</td>
+                <td><input type="text" list="course-list" oninput="filterCourses(this)" /></td>
+                <td contenteditable="true" oninput="updateScore(this)"></td>
+                <td></td>
+                <td>
+                    <button onclick="selectStrategy(this, 'Frontrun')">前張り</button>
+                    <button onclick="selectStrategy(this, 'Bagging')">打開</button>
+                </td>
+            </tr>
+            <tr>
+                <td>9</td>
+                <td><input type="text" list="course-list" oninput="filterCourses(this)" /></td>
+                <td contenteditable="true" oninput="updateScore(this)"></td>
+                <td></td>
+                <td>
+                    <button onclick="selectStrategy(this, 'Frontrun')">前張り</button>
+                    <button onclick="selectStrategy(this, 'Bagging')">打開</button>
+                </td>
+            </tr>
+            <tr>
+                <td>10</td>
+                <td><input type="text" list="course-list" oninput="filterCourses(this)" /></td>
+                <td contenteditable="true" oninput="updateScore(this)"></td>
+                <td></td>
+                <td>
+                    <button onclick="selectStrategy(this, 'Frontrun')">前張り</button>
+                    <button onclick="selectStrategy(this, 'Bagging')">打開</button>
+                </td>
+            </tr>
+            <tr>
+                <td>11</td>
+                <td><input type="text" list="course-list" oninput="filterCourses(this)" /></td>
+                <td contenteditable="true" oninput="updateScore(this)"></td>
+                <td></td>
+                <td>
+                    <button onclick="selectStrategy(this, 'Frontrun')">前張り</button>
+                    <button onclick="selectStrategy(this, 'Bagging')">打開</button>
+                </td>
+            </tr>
+            <tr>
+                <td>12</td>
+                <td><input type="text" list="course-list" oninput="filterCourses(this)" /></td>
+                <td contenteditable="true" oninput="updateScore(this)"></td>
+                <td></td>
+                <td>
+                    <button onclick="selectStrategy(this, 'Frontrun')">前張り</button>
+                    <button onclick="selectStrategy(this, 'Bagging')">打開</button>
+                </td>
+            </tr>
+            
+        </tbody>
+        <tfoot>
+            <tr>
+                <td colspan="2">平均順位</td>
+                <td id="average-rank"></td>
+                <td id="total-score"></td>
+                <td id="strategy-percentage"></td>
+            </tr>
+        </tfoot>
+    </table>
+
+    <datalist id="course-list"></datalist>
+
+    <h2>結果</h2>
+    <div id="results-display"></div>
+    <button id="copy-button" onclick="copyResults()">コピー</button>
+
+    <script>
+        // コース名と略称のマッピング
+const courseAbbreviations = {
+    "mks": "マリオカートスタジアム",
+    "wp": "ウォーターパーク",
+    "ssc": "スイーツキャニオン",
+    "tr": "ドッスンいせき",
+    "mc": "マリオサーキット",
+    "th": "キノピオハーバー",
+    "tm": "ねじれマンション",
+    "sgf": "ヘイホーこうざん",
+    "sa": "サンシャインくうこう",
+    "ds": "ドルフィンみさき",
+    "ed": "エレクトロドリーム",
+    "mw": "ワリオスノーマウンテン",
+    "cc": "スカイガーデン",
+    "bdd": "ホネホネさばく",
+    "bc": "クッパキャッスル",
+    "rr": "レインボーロード",
+    "mmm": "Wii モーモーカントリー",
+    "gba": "GBA マリオサーキット",
+    "ccb": "DS プクプクビーチ",
+    "tt": "N64 キノピオハイウェイ",
+    "ddd": "GC カラカラさばく",
+    "dp3": "SFC ドーナツへいや3",
+    "rry": "N64 ピーチサーキット",
+    "dkj": "3DS DKジャングル",
+    "ws": "DS ワリオスタジアム",
+    "sl": "GC シャーベットランド",
+    "mp": "3DS ミュージックパーク",
+    "yv": "N64 ヨッシーバレー",
+    "ttc": "DS チクタクロック",
+    "pps": "3DS パックンスライダー",
+    "gv": "Wii グラグラかざん",
+    "rrrd": "N64 レインボーロード",
+    "yc": "GC ヨッシーサーキット",
+    "ea": "エキサイトバイク",
+    "dd": "ドラゴンロード",
+    "dmc": "ミュートシティ",
+    "wgm": "Wii ワリオこうざん",
+    "sfc": "SFC レインボーロード",
+    "iio": "ツルツルツイスター",
+    "hc": "ハイラルサーキット",
+    "bp": "GC ベビィパーク",
+    "cl": "GBA チーズランド",
+    "ww": "ネイチャーロード",
+    "ac": "どうぶつの森",
+    "nbc": "3DS ネオクッパシティ",
+    "rir": "GBA リボンロード",
+    "sbs": "リンリンメトロ",
+    "bb": "ビッグブルー",
+    "pp": "Tour パリプロムナード",
+    "tc": "3DS キノピオサーキット",
+    "cmo": "N64 チョコマウンテン",
+    "cma": "Wii ココナッツモール",
+    "tb": "Tour トーキョースクランブル",
+    "sr": "DS キノコリッジウェイ",
+    "sg": "GBA スカイガーデン",
+    "nh": "Tour ニンニンドージョー",
+    "ny": "Tour ニューヨークドリーム",
+    "mc3": "SFC マリオサーキット3",
+    "kd": "N64 カラカラさばく",
+    "bwp": "DS ワルイージピンボール",
+    "ss": "Tour シドニーサンシャイン",
+    "bsl": "GBA スノーランド",
+    "mg": "Wii キノコキャニオン",
+    "shs": "Tour アイスビルディング",
+    "ll": "Tour ロンドンアベニュー",
+    "bl": "GBA テレサレイク",
+    "rrm": "3DS ロックロックマウンテン",
+    "mt": "Wii メイプルツリーハウス",
+    "bbb": "Tour ベルリンシュトラーセ",
+    "pg": "DS ピーチガーデン",
+    "mm": "Tour メリーメリーマウンテン",
+    "rr7": "3DS レインボーロード",
+    "ad": "Tour アムステルダムブルーム",
+    "rp": "GBA リバーサイドパーク",
+    "dks": "Wii DKスノーボードクロス",
+    "yi": "ヨッシーアイランド",
+    "br": "Tour バンコクラッシュ",
+    "bmc": "DS マリオサーキット",
+    "bws": "GC ワルイージスタジアム",
+    "ssy": "Tour シンガポールスプラッシュ",
+    "atd": "Tour アテネポリス",
+    "dc": "GC デイジークルーザー", 
+    "mh": "Wii ムーンリッジ＆ハイウェイ", 
+    "scs": "シャボンロード", 
+    "los": "Tour ロサンゼルスコースト", 
+    "sw": "GBA サンセットこうや", 
+    "kc": "Wii ノコノコみさき", 
+    "vv": "Tour バンクーバーバレー", 
+    "ra": "Tour ローマアバンティ", 
+    "dkm": "GC DKマウンテン", 
+    "dct": "Wii デイジーサーキット", 
+    "ppc": "Tour パックンしんでん", 
+    "md": "Tour マドリードグランデ", 
+    "riw": "3DS ロゼッタプラネット", 
+    "bc3": "SFC クッパじょう3", 
+    "rrw": "Wii レインボーロード", 
+
+
+};
+        
+
+
+
+// ひらがなをカタカナに変換する関数
+function hiraganaToKatakana(str) {
+    return str.replace(/[\u3041-\u3096]/g, function(match) {
+        return String.fromCharCode(match.charCodeAt(0) + 0x60);
+    });
+}
+
+// コースリストをフィルタリングする関数
+function filterCourses(input) {
+    const filterText = input.value.trim();  // 入力値をトリムして正規化
+    const katakanaFilterText = hiraganaToKatakana(filterText); // ひらがなをカタカナに変換
+
+    const courseList = document.getElementById('course-list');
+    courseList.innerHTML = ''; // 候補リストを初期化
+
+    for (const abbrev in courseAbbreviations) {
+        const courseName = courseAbbreviations[abbrev];
+
+        // 正規化されたコース名を取得してひらがな・カタカナに対応するようにする
+        const searchName = courseName.replace(/^(DS|Tour|Wii|GBA|3DS|SFC|GC|N64)\s*/, '');
+        const katakanaCourseName = hiraganaToKatakana(searchName);  // ひらがなをカタカナに変換して比較
+
+        // 入力された文字列がコース名（ひらがな/カタカナ変換後）に含まれているか確認
+        if (katakanaCourseName.includes(katakanaFilterText) || katakanaCourseName.includes(filterText)) {
+            const option = document.createElement('option');
+            option.value = courseName;
+            courseList.appendChild(option);
+        }
+    }
+}
+
+
+
+        function updateScore(rankCell) {
+            const rank = parseInt(rankCell.innerText);
+            const scoreCell = rankCell.nextElementSibling;
+            if (!isNaN(rank)) {
+                let score;
+                switch (rank) {
+                    case 1: score = 15; break;
+                    case 2: score = 12; break;
+                    case 3: score = 10; break;
+                    case 4: score = 9; break;
+                    case 5: score = 8; break;
+                    case 6: score = 7; break;
+                    case 7: score = 6; break;
+                    case 8: score = 5; break;
+                    case 9: score = 4; break;
+                    case 10: score = 3; break;
+                    case 11: score = 2; break;
+                    case 12: score = 1; break;
+                    default: score = '未入力';
+                }
+                scoreCell.innerText = score;
+                updateResultsDisplay(); // 更新時に結果表示を更新
+                calculateSummary(); // 更新時に要約を計算
+            } else {
+                scoreCell.innerText = '未入力';
+            }
+        }
+
+        function selectStrategy(button, strategy) {
+            const cell = button.parentElement;
+            cell.setAttribute('data-strategy', strategy);
+            cell.innerHTML = strategy;
+            updateResultsDisplay(); // 戦略選択時に結果表示を更新
+            calculateSummary();
+        }
+
+        function updateResultsDisplay() {
+    const rows = document.querySelectorAll("#race-table tbody tr");
+    const resultsDisplay = document.getElementById("results-display");
+    resultsDisplay.innerHTML = ''; // 初期化
+
+    let resultsArray = []; // 結果を格納する配列
+
+    rows.forEach(row => {
+        const rankCell = row.querySelector("td:nth-child(3)");
+        const strategyCell = row.querySelector("td:nth-child(5)");
+        const inputCell = row.querySelector("td:nth-child(2) input");
+        const courseName = inputCell.value; // 入力されたコース名
+
+        const rank = rankCell.innerText.trim();
+        const strategy = strategyCell.getAttribute('data-strategy');
+
+        if (courseName && rank) {
+            const abbrev = Object.keys(courseAbbreviations).find(key => courseAbbreviations[key] === courseName);
+            // 戦略に応じた短縮形を設定
+            const strategyShort = strategy === 'Frontrun' ? 'f' : (strategy === 'Bagging' ? 'b' : '');
+            const resultLine = `${abbrev || ''} ${rank} ${strategyShort}`; // カンマ区切りで連続表示するためにスペースを削除
+            resultsArray.push(resultLine); // 結果を配列に追加
+        }
+    });
+
+    resultsDisplay.innerHTML = resultsArray.join(', '); // 配列をカンマ区切りで結合して表示
+}
+
+
+        function copyResults() {
+            const resultsDisplay = document.getElementById("results-display");
+            const resultsText = resultsDisplay.innerText; // 結果をコピーするためのテキスト
+            navigator.clipboard.writeText(resultsText)
+                .then(() => {
+                    alert("結果がクリップボードにコピーされました！");
+                })
+                .catch(err => {
+                    console.error("コピーに失敗しました: ", err);
+                });
+        }
+
+        function calculateSummary() {
+            const rows = document.querySelectorAll("#race-table tbody tr");
+            let totalScore = 0;
+            let totalRank = 0;
+            let totalRaces = 0;
+            let frontRunCount = 0;
+            let baggingCount = 0;
+
+            rows.forEach(row => {
+                const rankCell = row.querySelector("td:nth-child(3)");
+                const scoreCell = row.querySelector("td:nth-child(4)");
+                const strategyCell = row.querySelector("td:nth-child(5)");
+
+                const rank = parseInt(rankCell.innerText);
+                const score = parseInt(scoreCell.innerText);
+                const strategy = strategyCell.getAttribute('data-strategy');
+
+                if (!isNaN(rank) && rank >= 1 && rank <= 12) {
+                    totalRank += rank;
+                    totalRaces++;
+                }
+                if (!isNaN(score)) {
+                    totalScore += score;
+                }
+                if (strategy === 'Frontrun') {
+                    frontRunCount++;
+                } else if (strategy === 'Bagging') {
+                    baggingCount++;
+                }
+            });
+
+            const averageRank = totalRaces > 0 ? (totalRank / totalRaces).toFixed(2) : '未入力';
+            const frontRunPercentage = totalRaces > 0 ? ((frontRunCount / totalRaces) * 100).toFixed(2) + '%' : '未入力';
+            const baggingPercentage = totalRaces > 0 ? ((baggingCount / totalRaces) * 100).toFixed(2) + '%' : '未入力';
+
+            document.getElementById("average-rank").innerText = averageRank;
+            document.getElementById("total-score").innerText = totalScore;
+            document.getElementById("strategy-percentage").innerText = `前張り: ${frontRunPercentage}, \n打開: ${baggingPercentage}`;
+        }
+    </script>
+</body>
+</html>
+
